@@ -7,14 +7,19 @@ stages:
     outs:
     - data/cleaned/swiggy_clean.csv
 
+
   data_prep:
     cmd: python src/data/data_preperation.py
+    params:
+    - Data_Preparation.test_size
+    - Data_Preparation.random_state
     deps:
     - data/cleaned/swiggy_clean.csv
     - src/data/data_preperation.py
     outs:
     - data/interim/test.csv
     - data/interim/train.csv
+
 
   data_preprocess:
     cmd: python src/features/data_preprocessing.py
@@ -26,3 +31,17 @@ stages:
     - data/processed/test_trans.csv
     - data/processed/train_trans.csv
     - models/preprocessor.joblib
+
+
+  train:
+    cmd: python src/models/train.py
+    deps:
+    - src/models/train.py
+    - data/processed/train_trans.csv
+    params:
+    - Train.Random_Forest
+    - Train.LightGBM
+    outs:
+    - models/model.joblib
+    - models/power_transformer.joblib
+    - models/stacking_regressor.joblib

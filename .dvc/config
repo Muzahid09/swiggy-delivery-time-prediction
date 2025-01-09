@@ -1,0 +1,4 @@
+[core]
+    remote = dvc_food
+['remote "dvc_food"']
+    url = s3://for-food-delivery

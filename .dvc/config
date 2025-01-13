@@ -2,3 +2,5 @@
     remote = dvc_food
 ['remote "dvc_food"']
     url = s3://for-food-delivery
+['remote "dvc_food2"']
+    url = s3://food-delivery2

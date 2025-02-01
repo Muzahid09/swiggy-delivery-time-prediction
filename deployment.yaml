@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: delivery-time-deploy
+spec:
+  selector:
+    matchLabels:
+      app: delivery-time-pod
+  template:
+    metadata:
+      labels:
+        app: delivery-time-pod
+    spec:
+      containers:
+      - name: delivery-time
+        image: myapp:v2
+        resources:
+          limits:
+            memory: "500Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 8000
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: delivery-time-service
+spec:
+  selector:
+    app: delivery-time-pod
+  ports:
+  - port: 8000
+    targetPort: 8000
+

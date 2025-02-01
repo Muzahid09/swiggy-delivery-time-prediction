@@ -1,8 +1,11 @@
 # Set the base image 
-FROM python:3.13.1
+FROM python:3.13.1-slim
+
+# install lightgbm dependency
+RUN apt-get update && apt-get install -y libgomp1
 
 # Setup the working directory
-WORKDIR /app_
+WORKDIR /app
 
 # Copy the required files
 COPY  requirements-docker.txt ./

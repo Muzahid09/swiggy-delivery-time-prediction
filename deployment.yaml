@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: delivery-time-deploy
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: delivery-time-pod
@@ -14,10 +15,17 @@ spec:
       containers:
       - name: delivery-time
         image: myapp:v2
+        imagePullPolicy: Never
+        env:
+        - name: DAGSHUB_USER_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: dagshub-secret
+              key: DAGSHUB_USER_TOKEN
         resources:
           limits:
-            memory: "500Mi"
-            cpu: "200m"
+            memory: "1000Mi"
+            cpu: "500m"
         ports:
         - containerPort: 8000
 
@@ -33,6 +41,6 @@ spec:
   selector:
     app: delivery-time-pod
   ports:
-  - port: 8000
+  - port: 1234
     targetPort: 8000
 

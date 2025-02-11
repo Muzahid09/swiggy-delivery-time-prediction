@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: delivery-time-deploy
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: delivery-time-pod
@@ -12,6 +12,8 @@ spec:
       labels:
         app: delivery-time-pod
     spec:
+      nodeSelector:
+        node-role.kubernetes.io/worker: ""  # Ensures pods only go to worker nodes
       containers:
       - name: delivery-time
         image: myapp:v2
